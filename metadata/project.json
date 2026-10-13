@@ -44,5 +44,6 @@
       "height": 1080,
       "caption": "Actual Chromium capture of the interactive browser preview. Invented data; no live game, account or hardware connection."
     }
-  ]
+  ],
+  "previewDownload": "https://github.com/Spaceghost/xivcamp-dalamud/releases/download/v0.0.1-preview/browser-preview.zip"
 }
