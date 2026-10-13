@@ -18,6 +18,7 @@ Node 22 or later is required. Authored browser code and build tooling are native
 npm ci --ignore-scripts
 npm run build
 npm run check
+npm test
 python3 -m http.server 8080 --directory preview
 ```
 
