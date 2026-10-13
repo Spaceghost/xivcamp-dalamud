@@ -1,0 +1,192 @@
+{
+  "mod": "xivcamp",
+  "version": 1,
+  "top_picks": [
+    "xivcamp-presets",
+    "xivcamp-screen-layout",
+    "xivcamp-prism-layout",
+    "xivcamp-world-windows"
+  ],
+  "categories": [
+    {
+      "name": "XivCamp \u00b7 First useful release",
+      "tagline": "Choose what would make this project useful first.",
+      "ideas": [
+        {
+          "id": "xivcamp-presets",
+          "title": "Campfire, work corner and adventure",
+          "pitch": "Switch between a few arrangements that fit the moment.",
+          "experience": "Switch between a few arrangements that fit the moment. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Versioned preset documents with clear panel selections.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 8,
+          "feasibility": "high",
+          "effort": "small",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-screen-layout",
+          "title": "Remember screen positions",
+          "pitch": "Return panels to their saved sizes and places.",
+          "experience": "Return panels to their saved sizes and places. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Live window-provider geometry and reversible ownership.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 8,
+          "feasibility": "high",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-prism-layout",
+          "title": "Spread a camp across displays",
+          "pitch": "Keep the journal on a tablet and navigation in glasses.",
+          "experience": "Keep the journal on a tablet and navigation in glasses. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Prism output bindings and per-client fallback rules.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 8,
+          "feasibility": "medium",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-world-windows",
+          "title": "Unfold panels into the world",
+          "pitch": "Arrange a personal semicircle of useful windows.",
+          "experience": "Arrange a personal semicircle of useful windows. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Optional Ghostty hosting with actual-state reporting.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": true,
+          "wow": 8,
+          "feasibility": "medium",
+          "effort": "large",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-rug",
+          "title": "Make the map rug your centre",
+          "pitch": "Build an arrangement around Rug and its route view.",
+          "experience": "Build an arrangement around Rug and its route view. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "An optional Rug provider with explicit placement support.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": true,
+          "wow": 7,
+          "feasibility": "medium",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-music",
+          "title": "Music for your arrangement",
+          "pitch": "Recall a selected music view or station when you choose a scene.",
+          "experience": "Recall a selected music view or station when you choose a scene. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Optional Piano IPC and explicit, reversible music actions.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "medium",
+          "effort": "medium",
+          "added_version": 1
+        }
+      ]
+    },
+    {
+      "name": "XivCamp \u00b7 Grow the experience",
+      "tagline": "Later integrations and presentation choices.",
+      "ideas": [
+        {
+          "id": "xivcamp-dispatch",
+          "title": "A work corner for Slack",
+          "pitch": "Bring a selected Dispatch panel into a saved arrangement.",
+          "experience": "Bring a selected Dispatch panel into a saved arrangement. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Panel adapters with no Slack credentials in scene files.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "high",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-lantern",
+          "title": "A camp with your friends",
+          "pitch": "Keep a selected Lantern conversation within reach.",
+          "experience": "Keep a selected Lantern conversation within reach. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "An optional panel integration without publishing the scene automatically.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "medium",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-restore",
+          "title": "Put everything back",
+          "pitch": "Close a camp and restore the arrangement that came before it.",
+          "experience": "Close a camp and restore the arrangement that came before it. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Owned leases, saved prior state and rollback on partial failure.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "high",
+          "effort": "large",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-missing-providers",
+          "title": "A camp that survives missing mods",
+          "pitch": "Open the available panels and explain what is missing.",
+          "experience": "Open the available panels and explain what is missing. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Capability discovery and independent provider errors.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "high",
+          "effort": "medium",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-export",
+          "title": "Share a layout draft",
+          "pitch": "Export arrangements without account credentials or private messages.",
+          "experience": "Export arrangements without account credentials or private messages. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "A versioned geometry-only document with validation on import.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "high",
+          "effort": "small",
+          "added_version": 1
+        },
+        {
+          "id": "xivcamp-controller",
+          "title": "A camp from the couch",
+          "pitch": "Choose and dismiss arrangements without fighting game controls.",
+          "experience": "Choose and dismiss arrangements without fighting game controls. This is a proposed feature; the published preview demonstrates design choices with invented data.",
+          "how": "Explicit focus ownership and accessible keyboard/controller navigation.",
+          "risks": "Live provider, platform and hardware behavior must be tested before this feature is advertised as available.",
+          "audience": "Players using companion displays and the illustrated HUD family.",
+          "in_world": false,
+          "wow": 7,
+          "feasibility": "medium",
+          "effort": "medium",
+          "added_version": 1
+        }
+      ]
+    }
+  ]
+}

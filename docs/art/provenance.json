@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: wide website hero illustration for XivCamp, saved cozy arrangements of HUD panels, music, maps and conversations for FFXIV. Create a polished cinematic editorial illustration, landscape 16:9. A beautiful secluded fantasy campsite at blue twilight under an enormous old tree, a richly woven round map rug, an open illustrated journal, a small brass lantern and a warm campfire. Three sparse translucent glass panels hover in a harmonious semicircle just above the rug: a winding route map, a music waveform, and an abstract conversation bubble. Leave the main scene open and calm, evoke a personal portable sanctuary, not a busy dashboard. Painterly ink and gouache detail, deep midnight blue, brass gold, muted turquoise and warm orange firelight, tactile woven fibres and paper, rich atmospheric depth, highly crafted editorial art. Clearly concept artwork, not an in-game screenshot. No lettering, fake text, logos, or watermark.",
+  "caption": "AI-generated concept illustration; not a hardware photo or in-game screenshot.",
+  "asset": "hero.webp"
+}
