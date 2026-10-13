@@ -4,6 +4,22 @@
   var project = globalThis.document.body.dataset.project;
   var root = globalThis.document.querySelector("#preview");
   var state = { mode: "standalone", output: "glasses", connected: true, sample: 0, quiet: false, conversation: "dm", preset: "campfire" };
+  var draftText = null;
+  var draftStored = true;
+  function change(control, key, action) {
+    const focused = globalThis.document.activeElement == control;
+    action();
+    if (focused) {
+      const replacement = Array.from(root.querySelectorAll("[data-preview-control]")).find(function(node) {
+        return node.dataset.previewControl == key;
+      });
+      if (replacement) {
+        return replacement.focus({ preventScroll: true });
+      }
+      ;
+    }
+    ;
+  }
   function element(kind, text = "", className = "") {
     const node = globalThis.document.createElement(kind);
     if (text) {
@@ -16,11 +32,17 @@
     ;
     return node;
   }
-  function button(label, action, active = false) {
+  function button(label, action, active = null, key = label) {
     const node = element("button", label, "chip");
     node.type = "button";
-    node.setAttribute("aria-pressed", String(active));
-    node.addEventListener("click", action);
+    node.dataset.previewControl = key;
+    if (active != null) {
+      node.setAttribute("aria-pressed", String(active));
+    }
+    ;
+    node.addEventListener("click", function() {
+      return change(node, key, action);
+    });
     return node;
   }
   function panel(title, lines, position = "") {
@@ -57,6 +79,7 @@
       }, state.mode == mode));
     });
     const output = element("select");
+    output.dataset.previewControl = "output";
     output.setAttribute("aria-label", "Preview output");
     ["glasses", "tablet", "monitor"].forEach(function(value) {
       const option = element("option", value == "glasses" ? "Glasses: peripheral HUD" : value == "tablet" ? "Tablet: journal" : "Monitor: dashboard");
@@ -65,13 +88,15 @@
     });
     output.value = state.output;
     output.addEventListener("change", function() {
-      state.output = output.value;
-      return renderPrism();
+      return change(output, "output", function() {
+        state.output = output.value;
+        return renderPrism();
+      });
     });
     choices.append(output, button(state.connected ? "Simulate unplug" : "Simulate reconnect", function() {
       state.connected = !state.connected;
       return renderPrism();
-    }), button("Advance sample", function() {
+    }, null, "connection"), button("Advance sample", function() {
       state.sample++;
       return renderPrism();
     }));
@@ -124,7 +149,7 @@
     controls.append(button(state.quiet ? "Leave quiet mode" : "Quiet session", function() {
       state.quiet = !state.quiet;
       return renderDispatch();
-    }, state.quiet));
+    }, state.quiet, "quiet"));
     root.append(controls);
     const stage = element("div", "", "preview-stage dispatch-stage");
     const lines = state.conversation == "dm" ? ["Mira: Ready for a short break?", "You: Let me finish this chapter first."] : state.conversation == "channel" ? ["#weekend-plans \xB7 fictional workspace", "Mira: The next walk starts at the old bridge.", "Ren: I will bring the map."] : ["Mira: Which layout should we try?", "2 replies", "Ren: Glasses for navigation, tablet for the journal."];
@@ -135,27 +160,38 @@
     draft.id = "dispatch-draft";
     draft.rows = 3;
     draft.maxLength = 1e3;
-    draft.value = readDraft();
+    if (draftText == null) {
+      draftText = readDraft();
+    }
+    ;
+    draft.value = draftText;
     draft.placeholder = "Try a draft. It stays in this browser only.";
-    const notice = element("p", "Drafts are local. This preview cannot send Slack messages.", "preview-state");
+    const notice = element("p", draftStored ? "Drafts are local. This preview cannot send Slack messages." : "Draft kept for this visit only. Browser storage is unavailable; copy it before leaving.", "preview-state");
     notice.setAttribute("role", "status");
     draft.addEventListener("input", function() {
+      draftText = draft.value;
       try {
         localStorage.setItem("xivdispatch-preview-draft", draft.value);
+        draftStored = true;
         return notice.textContent = "Preview draft saved in this browser. Nothing was sent.";
       } catch ($2) {
-        return notice.textContent = "Browser storage is unavailable. Nothing was sent.";
+        draftStored = false;
+        return notice.textContent = "Draft kept for this visit only. Browser storage is unavailable; copy it before leaving.";
       }
       ;
     });
     stage.append(label, draft, button("Clear preview draft", function() {
+      draftText = "";
+      draft.value = "";
       try {
         localStorage.removeItem("xivdispatch-preview-draft");
+        draftStored = true;
+        return notice.textContent = "Preview draft cleared. Nothing was sent.";
       } catch ($3) {
+        draftStored = false;
+        return notice.textContent = "Draft cleared for this visit. Browser storage could not be cleared.";
       }
       ;
-      draft.value = "";
-      return notice.textContent = "Preview draft cleared. Nothing was sent.";
     }));
     return root.append(stage, element("p", state.quiet ? "Quiet session: sample notifications are held." : "Sample notifications are visible. No Slack account is connected.", "preview-state"), notice);
   }

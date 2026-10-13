@@ -2,6 +2,17 @@
 const project = document.body.dataset.project
 const root = document.querySelector('#preview')
 const state = {mode: 'standalone', output: 'glasses', connected: true, sample: 0, quiet: false, conversation: 'dm', preset: 'campfire'}
+let draftText = null
+let draftStored = true
+
+# Redrawing a sample must not strand keyboard users at the top of the page.
+def change(control, key, action)
+	const focused = document.activeElement == control
+	action()
+	if focused
+		const replacement = Array.from(root.querySelectorAll('[data-preview-control]')).find(do(node) node.dataset.previewControl == key)
+		if replacement
+			replacement.focus({preventScroll: true})
 
 def element(kind, text = '', className = '')
 	const node = document.createElement(kind)
@@ -11,11 +22,13 @@ def element(kind, text = '', className = '')
 		node.className = className
 	return node
 
-def button(label, action, active = false)
+def button(label, action, active = null, key = label)
 	const node = element('button', label, 'chip')
 	node.type = 'button'
-	node.setAttribute('aria-pressed', String(active))
-	node.addEventListener('click', action)
+	node.dataset.previewControl = key
+	if active != null
+		node.setAttribute('aria-pressed', String(active))
+	node.addEventListener('click', do change(node, key, action))
 	return node
 
 def panel(title, lines, position = '')
@@ -48,6 +61,7 @@ def renderPrism
 		), state.mode == mode))
 	)
 	const output = element('select')
+	output.dataset.previewControl = 'output'
 	output.setAttribute('aria-label', 'Preview output')
 	['glasses', 'tablet', 'monitor'].forEach(do(value)
 		const option = element('option', value == 'glasses' ? 'Glasses: peripheral HUD' : value == 'tablet' ? 'Tablet: journal' : 'Monitor: dashboard')
@@ -55,14 +69,14 @@ def renderPrism
 		output.append(option)
 	)
 	output.value = state.output
-	output.addEventListener('change', do
+	output.addEventListener('change', do change(output, 'output', do
 		state.output = output.value
 		renderPrism()
-	)
-	choices.append(output, button(state.connected ? 'Simulate unplug' : 'Simulate reconnect', do
+	))
+	choices.append(output, button(state.connected ? 'Simulate unplug' : 'Simulate reconnect', (do
 		state.connected = !state.connected
 		renderPrism()
-	), button('Advance sample', do
+	), null, 'connection'), button('Advance sample', do
 		state.sample++
 		renderPrism()
 	))
@@ -105,7 +119,7 @@ def renderDispatch
 	controls.append(button(state.quiet ? 'Leave quiet mode' : 'Quiet session', (do
 		state.quiet = !state.quiet
 		renderDispatch()
-	), state.quiet))
+	), state.quiet, 'quiet'))
 	root.append(controls)
 	const stage = element('div', '', 'preview-stage dispatch-stage')
 	const lines = state.conversation == 'dm' ? ['Mira: Ready for a short break?', 'You: Let me finish this chapter first.'] : state.conversation == 'channel' ? ['#weekend-plans · fictional workspace', 'Mira: The next walk starts at the old bridge.', 'Ren: I will bring the map.'] : ['Mira: Which layout should we try?', '2 replies', 'Ren: Glasses for navigation, tablet for the journal.']
@@ -116,24 +130,32 @@ def renderDispatch
 	draft.id = 'dispatch-draft'
 	draft.rows = 3
 	draft.maxLength = 1000
-	draft.value = readDraft()
+	if draftText == null
+		draftText = readDraft()
+	draft.value = draftText
 	draft.placeholder = 'Try a draft. It stays in this browser only.'
-	const notice = element('p', 'Drafts are local. This preview cannot send Slack messages.', 'preview-state')
+	const notice = element('p', draftStored ? 'Drafts are local. This preview cannot send Slack messages.' : 'Draft kept for this visit only. Browser storage is unavailable; copy it before leaving.', 'preview-state')
 	notice.setAttribute('role', 'status')
 	draft.addEventListener('input', do
+		draftText = draft.value
 		try
 			localStorage.setItem('xivdispatch-preview-draft', draft.value)
+			draftStored = true
 			notice.textContent = 'Preview draft saved in this browser. Nothing was sent.'
 		catch
-			notice.textContent = 'Browser storage is unavailable. Nothing was sent.'
+			draftStored = false
+			notice.textContent = 'Draft kept for this visit only. Browser storage is unavailable; copy it before leaving.'
 	)
 	stage.append(label, draft, button('Clear preview draft', do
+		draftText = ''
+		draft.value = ''
 		try
 			localStorage.removeItem('xivdispatch-preview-draft')
+			draftStored = true
+			notice.textContent = 'Preview draft cleared. Nothing was sent.'
 		catch
-			undefined
-		draft.value = ''
-		notice.textContent = 'Preview draft cleared. Nothing was sent.'
+			draftStored = false
+			notice.textContent = 'Draft cleared for this visit. Browser storage could not be cleared.'
 	))
 	root.append(stage, element('p', state.quiet ? 'Quiet session: sample notifications are held.' : 'Sample notifications are visible. No Slack account is connected.', 'preview-state'), notice)
 

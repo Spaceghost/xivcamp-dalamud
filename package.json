@@ -5,7 +5,8 @@
   "description": "A saved-layout project for your map rug, journal, music, conversations and world windows. Make a campfire, work corner or adventure arrangement and return to it.",
   "scripts": {
     "build": "tools/build.sh",
-    "check": "tools/build.sh --check"
+    "check": "tools/build.sh --check",
+    "test": "node --test tests/*.test.js"
   },
   "devDependencies": {
     "imba": "2.0.0-alpha.253",

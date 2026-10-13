@@ -18,6 +18,7 @@ Node 22 or later is required. Authored browser code and build tooling are native
 npm ci --ignore-scripts
 npm run build
 npm run check
+npm test
 python3 -m http.server 8080 --directory preview
 ```
 
@@ -40,8 +41,8 @@ Captured in Chromium. This is a design demonstration, not a live game or account
 
 ## Publication and validation
 
-The canonical website registry and ballots are maintained in [ghostty-vote](https://github.com/Spaceghost/ghostty-vote). `metadata/project.json` records this project's identity and honest publication state. `metadata/feature-catalogue.json` mirrors the initial public ballot. No release archives or plugin installer entries are published for this preview.
+The canonical website registry and ballots are maintained in [ghostty-vote](https://github.com/Spaceghost/ghostty-vote). `metadata/project.json` records this project's identity and honest publication state. `metadata/feature-catalogue.json` mirrors the initial public ballot. [Browser preview downloads](https://github.com/Spaceghost/xivcamp-dalamud/releases) contain the standalone design demonstration. There is no installable Dalamud plugin or plugin installer entry yet.
 
-The CI verifies precompiled output and builds the browser preview. Real game, account, display, hotplug and input checks remain acceptance work, tracked in the roadmap.
+The CI verifies precompiled output, builds the browser preview, and runs the interaction regression tests. Real game, account, display, hotplug and input checks remain acceptance work, tracked in the roadmap.
 
 Made by Johnneylee Jack Rollins. An independent fan project, not affiliated with Square Enix or hardware/service vendors. Source is MIT licensed; generated artwork attribution is in `docs/art/provenance.json`.
