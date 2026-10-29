@@ -1,3 +1,6 @@
-node_modules
-.DS_Store
-*.log
+node_modules/
+artifacts/
+release/
+.dalamud/
+**/bin/
+**/obj/

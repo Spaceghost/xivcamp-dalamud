@@ -1,0 +1,12 @@
+{
+  "version": "15.0.3.6",
+  "files": {
+    "Dalamud.dll": "c726c1de70b76a7acc970f48e29589cd61205f08daec9586d112a977583055f5",
+    "FFXIVClientStructs.dll": "4b6f4accf4d1038a6e5339a359f536e9abb9d4e713a8e34d85c80f8ca3d36b56",
+    "Dalamud.Bindings.ImGui.dll": "a05777aa7627ba53abe8c47664cb88d12496aa74f963301221d278a8ad8f9cba",
+    "Lumina.dll": "f2cde58ccfdd9f51923000f0b6d9b35b59dfca5e2c23e8ba5a06a14269a83cbb",
+    "Lumina.Excel.dll": "53054c5103522f547459facb3e8d23ac6e2001597028db4282fbaf7341a2ea1f",
+    "TerraFX.Interop.Windows.dll": "bddaf6329ea235bfa8eb50d8437851e3df8134d352e7db6598d2afc40e66a01b"
+  },
+  "distributionCommit": "3e8e6eb456c928401febd1d9452c4b8d4cad0eb5"
+}

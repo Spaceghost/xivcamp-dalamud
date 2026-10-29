@@ -2,47 +2,65 @@
 
 Unfold your little corner of Eorzea.
 
-A saved-layout project for your map rug, journal, music, conversations and world windows. Make a campfire, work corner or adventure arrangement and return to it.
+A working saved-workspace plugin for the illustrated UI family, with Campfire,
+Work corner and Adventure arrangements. Remember your current workspace, unfold
+a saved arrangement, and pack up to restore what was there before.
 
-![XivCamp concept illustration](docs/art/hero.webp)
+## Use
 
-**Status: interactive design preview.** The source builds a browser preview with invented data. There is no installable Dalamud release, live game integration, or verified hardware support yet. The illustration is AI-generated concept artwork, not a screenshot or hardware photograph.
+Open `/xivcamp` or its optional Umbra toolbar button. Choose an arrangement and
+**Unfold this camp**. **Pack up** restores the original workspace; closing the
+Camp manager also packs up after a pending change settles. `/xivcamp apply NAME`,
+`/xivcamp capture` and `/xivcamp restore` offer the same explicit controls.
 
-[Project site](https://spacegho.st/mods/ffxiv/xivcamp/) · [Try the preview](https://spacegho.st/mods/ffxiv/xivcamp/preview/) · [Vote on features](https://spacegho.st/mods/ffxiv/xivcamp/vote/) · [Roadmap](ROADMAP.md) · [Architecture](docs/architecture.md)
+Journal, Character, Combat and Chat expose the additive `window.layout` operation
+for viewport-relative positions. Camp negotiates each provider's actual methods.
+Older modules can still participate through visibility controls while keeping
+their positions. Vitals, Inventory, Crafting and the Floating Windows manager
+participate through their supported window controls. Missing modules are reported
+individually and are never silently installed or enabled.
 
-## Build and run the preview
+Existing screen, native and world host preferences are preserved in recovery
+state. Camp uses each module's controls; it does not take over a window renderer,
+controller lease, Ghostty terminal, native addon or world anchor. Per-world-panel
+placements and Rug geometry are later work. It does not move a character, spawn
+furniture or start a song. Your existing Piano and Wayfinder continue normally.
 
-Node 22 or later is required. Authored browser code and build tooling are native Imba, precompiled to committed JavaScript. Third-party compiler dependencies remain unchanged.
+Scenes persist across restarts and can be copied/imported as bounded versioned
+JSON. Imports do not apply automatically. Before changing a workspace, Camp saves
+an original-state journal. Requests wait for provider acknowledgements; refusal,
+timeout or provider disappearance starts restoration. Unload queues restoration
+and retains recovery until it is acknowledged. If a provider is still unavailable,
+**Restore recorded workspace** retries after it returns. No saved recovery is
+discarded merely because an older provider cannot restore a position.
+
+A scene can recommend a Prism profile. The paired viewer owns its local display
+layout and decides whether to use that profile. Camp works without Prism, Umbra,
+Ghostty or a terminal. `Umbra.XivCamp.dll` adds the optional toolbar entry.
+
+## Build
 
 ```sh
 npm ci --ignore-scripts
 npm run build
 npm run check
-npm test
-python3 -m http.server 8080 --directory preview
+tools/fetch-dalamud.sh
+python3 tools/plugin-build.py --test --locked
+python3 tools/plugin-package.py
 ```
 
-Open `http://localhost:8080`. The preview connects to no game, Slack account, network peer or glasses. It uses no credentials. Draft/profile exports describe preview state only.
+.NET SDK 10.0.401, Node 22+ and Python 3 are required. Add
+`--umbra-references /path/to/installed/Umbra` for its adapter. Reference hashes are
+checked; ZIPs exclude game-provided DLLs and record their source commit.
 
-## Browser preview capture
+Core tests cover schema validation, import bounds, older and absent providers,
+pre-change persistence, acknowledgement, refusal rollback, timeout and unload
+recovery. [Acceptance](docs/ACCEPTANCE.md) records actual live checks; keyboard,
+mouse and controller acceptance are distinct. [IPC](docs/IPC.md) describes the
+read-only status and queued local UI controls.
 
-![Actual browser preview with invented data](docs/art/preview.png)
+The old `preview/` remains an explicitly simulated design demo. Furniture in the
+concept artwork is not spawned by this plugin.
 
-Captured in Chromium. This is a design demonstration, not a live game or account connection.
-
-## Planned experience
-
-- **A place for the tools you already have.** Campfire brings Rug, Piano, Journal and Lantern together. Work corner adds Dispatch, notes and a terminal. Adventure favours Wayfinder and compact Prism information. Each arrangement remembers what belongs there.
-- **Begin on the screen.** The first implementation target is a saved screen layout: panel selection, position, size and display assignment. The interactive preview switches invented arrangements and exports a draft. It does not move real plugin windows.
-- **Then unfold it into the world.** Ghostty world windows and Rug placement are later integrations. A scene should retain an ordinary screen recovery path whenever a world host is missing or unavailable. A picture of a campsite is concept artwork, not evidence that furniture is being spawned.
-- **One arrangement, several displays.** With Prism, a Camp arrangement can send navigation to glasses, a journal to a tablet and work conversations to another monitor. Display mappings remain owned by the receiving client.
-- **Controller-friendly and reversible.** Opening Camp should have explicit focus ownership. Closing it, switching scenes or losing an optional provider should restore the previous arrangement. Missing panels should be reported individually rather than breaking the whole scene.
-- **What still needs proving.** Live window ownership, restoring positions, world placement, music actions and controller navigation need acceptance with the actual modules. There is no live plugin integration or installable Dalamud release in this publication.
-
-## Publication and validation
-
-The canonical website registry and ballots are maintained in [ghostty-vote](https://github.com/Spaceghost/ghostty-vote). `metadata/project.json` records this project's identity and honest publication state. `metadata/feature-catalogue.json` mirrors the initial public ballot. [Browser preview downloads](https://github.com/Spaceghost/xivcamp-dalamud/releases) contain the standalone design demonstration. There is no installable Dalamud plugin or plugin installer entry yet.
-
-The CI verifies precompiled output, builds the browser preview, and runs the interaction regression tests. Real game, account, display, hotplug and input checks remain acceptance work, tracked in the roadmap.
-
-Made by Johnneylee Jack Rollins. An independent fan project, not affiliated with Square Enix or hardware/service vendors. Source is MIT licensed; generated artwork attribution is in `docs/art/provenance.json`.
+[Project](https://spacegho.st/mods/ffxiv/xivcamp/) ·
+[Umbra family](https://spacegho.st/mods/ffxiv/umbra/) · [Roadmap](ROADMAP.md).
