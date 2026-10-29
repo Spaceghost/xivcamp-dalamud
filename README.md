@@ -16,7 +16,7 @@ Camp manager also packs up after a pending change settles. `/xivcamp apply NAME`
 Journal, Character, Combat and Chat expose the additive `window.layout` operation
 for viewport-relative positions. Camp negotiates each provider's actual methods.
 Older modules can still participate through visibility controls while keeping
-their positions. Vitals, Inventory, Crafting and the Floating Windows manager
+their positions. A window with no observed original geometry is opened without moving it; future scenes can position it after its first draw. Vitals, Inventory, Crafting and the Floating Windows manager
 participate through their supported window controls. Missing modules are reported
 individually and are never silently installed or enabled.
 

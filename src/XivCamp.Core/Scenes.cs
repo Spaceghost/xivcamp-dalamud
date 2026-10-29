@@ -82,8 +82,8 @@ public sealed class CampSession(IWorkspaceProviders providers,Action<List<PanelS
         }
         if(to.Layout is {} rect)
         {
-            if(from.Methods.Contains("window.layout"))result.Add(new(owner,"window.layout",new{x=rect.X,y=rect.Y,width=rect.Width,height=rect.Height}));
-            else reports.Add(owner+": position kept; update the module for saved layout support");
+            if(from.Methods.Contains("window.layout")&&from.State.Layout is not null)result.Add(new(owner,"window.layout",new{x=rect.X,y=rect.Y,width=rect.Width,height=rect.Height}));
+            else reports.Add(owner+(from.Methods.Contains("window.layout")?": position kept until this window has been opened once":": position kept; update the module for saved layout support"));
         }
         var method=to.Open?"window.open":"window.close";
         if(from.Methods.Contains(method))result.Add(new(owner,method,new{}));

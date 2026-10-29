@@ -52,4 +52,12 @@ public sealed class SceneTests
         var fake=new Fake();fake.Readings["chat"]=Reading("chat");var session=new CampSession(fake,_=>{});session.Apply(Scene());for(var i=0;i<10;i++)session.Tick(i*100);
         var previous=fake.Submitted.Count;session.RestoreOnUnload();Assert.True(fake.Submitted.Count>previous);Assert.NotEmpty(session.Recovery);Assert.All(fake.Submitted,x=>Assert.StartsWith("window.",x.Method));
     }
+    [Fact]public void AnUnobservedWindowIsNeverMovedWithoutARecoverableOriginalRectangle()
+    {
+        var reading=Reading("chat") with{State=new("chat",false)};var reports=new List<string>();
+        var plan=CampSession.Plan(reading,Scene().Panels[0],reports);
+        Assert.DoesNotContain(plan,x=>x.Method=="window.layout");Assert.Contains(reports,x=>x.Contains("opened once"));
+        Assert.Contains(plan,x=>x.Method=="window.open");
+    }
+
 }
