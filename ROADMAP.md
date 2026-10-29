@@ -1,11 +1,11 @@
 # XivCamp roadmap
 
-Published previews are design demonstrations. Check a milestone only after its acceptance evidence exists.
+Published previews remain design demonstrations. Live plugin acceptance is recorded in [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md).
 
 - [x] Preset and export preview with invented panels
-- [ ] Versioned arrangement format and validation
-- [ ] Live screen-window provider adapters
-- [ ] Reversible apply, restore and missing-provider reporting
+- [x] Versioned arrangement format and validation
+- [x] Live screen-window provider adapters
+- [x] Reversible apply, restore and missing-provider reporting
 - [ ] Prism display mappings
 - [ ] Music and conversation provider integration
 - [ ] Optional Ghostty world windows and Rug placement
