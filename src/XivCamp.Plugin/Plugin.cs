@@ -33,7 +33,7 @@ public sealed class Plugin:IDalamudPlugin
     {
         this.pi=pi;this.commands=commands;this.framework=framework;this.client=client;this.log=log;
         config=pi.GetPluginConfig() as Configuration??new();
-        config.Scenes=config.Scenes.Where(x=>x.Validate() is null).Take(16).ToList();if(config.Scenes.Count==0)config.Scenes=CampScene.Presets();
+        config.Scenes=config.Scenes.Where(x=>x.Validate() is null).GroupBy(x=>x.Name,StringComparer.Ordinal).Select(x=>x.Last()).Take(16).ToList();if(config.Scenes.Count==0)config.Scenes=CampScene.Presets();
         config.Recovery=config.Recovery.Where(x=>new CampScene(1,"Recovery",[x]).Validate() is null).Take(16).ToList();
         providers=new(pi);session=new(providers,recovery=>{config.Recovery=recovery;Save();});chrome=new(pi);
         selected=config.Scenes[0].Name;
