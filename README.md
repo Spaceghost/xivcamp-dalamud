@@ -20,6 +20,8 @@ their positions. A window with no observed original geometry is opened without m
 participate through their supported window controls. Missing modules are reported
 individually and are never silently installed or enabled.
 
+Screen roots already adopted by Floating Windows or Ghostty are left with that owner. An unavailable ownership report blocks a new takeover.
+
 Existing screen, native and world host preferences are preserved in recovery
 state. Camp uses each module's controls; it does not take over a window renderer,
 controller lease, Ghostty terminal, native addon or world anchor. Per-world-panel

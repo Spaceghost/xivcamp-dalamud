@@ -64,7 +64,7 @@ public sealed class CampSession(IWorkspaceProviders providers,Action<List<PanelS
         foreach(var target in scene.Panels)
         {
             var current=providers.Read(target.Owner);
-            if(current is null){Reports.Add(target.Owner+": not installed or unavailable");continue;}
+            if(current is null){Reports.Add(target.Owner+": not installed, unavailable or hosted elsewhere");continue;}
             originals.Add(current.State);planned.AddRange(Plan(current,target,Reports));
         }
         if(originals.Count==0){Status="No available scene panels";return;}

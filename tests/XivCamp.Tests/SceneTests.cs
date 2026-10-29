@@ -60,4 +60,14 @@ public sealed class SceneTests
         Assert.Contains(plan,x=>x.Method=="window.open");
     }
 
+    [Theory]
+    [InlineData("chat","Adventurer's Correspondence###XivHud.Chat",true)]
+    [InlineData("inventory","Inventory###XivHud.Inventory",true)]
+    [InlineData("chat","Other###XivHud.Chat.Notice.1",false)]
+    public void ExactExternallyHostedRootsKeepTheirExistingOwner(string owner,string app,bool blocked)
+    {
+        using var doc=System.Text.Json.JsonDocument.Parse(System.Text.Json.JsonSerializer.Serialize(new{ok=true,result=new{panels=new[]{new{kind="adopted",app}}}}));
+        Assert.Equal(blocked,HostOwnership.ExternalScreenOwner(owner,doc.RootElement));
+    }
+
 }
